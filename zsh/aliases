@@ -20,14 +20,25 @@ alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias changelog='git log `git log -1 --format=%H -- CHANGELOG*`..; cat CHANGELOG*'
 
 # rails
-alias sc='script/console'
-alias ss='script/server'
-alias sg='script/generate'
+alias sc='rails c'
+alias ss='rails s'
+alias sg='rails g'
 alias a='autotest -rails'
 alias tlog='tail -f log/development.log'
-alias scaffold='script/generate nifty_scaffold'
+alias scaffold='rails g scaffold'
 alias migrate='rake db:migrate db:test:clone'
 alias rst='touch tmp/restart.txt'
 
 # commands starting with % for pasting from web
 alias %=' '
+
+# Brown CS Department
+alias cs='ssh kvgishen@ssh.cs.brown.edu'
+alias csx='ssh -X kvgishen@ssh.cs.brown.edu'
+
+# Start MongoDB
+alias start_mongo='mongod run --config /usr/local/Cellar/mongodb/1.8.2-x86_64/mongod.conf'
+
+# Postgres
+alias start_postgres='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
+alias stop_postgres='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
