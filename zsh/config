@@ -6,7 +6,7 @@ fi
 
 export EDITOR='mate_wait'
 export PATH=/opt/local/bin:/opt/local/sbin:`npm bin`:$PATH
-export NODE_PATH=/usr/local/lib/node:$NODE_PATH
+export NODE_PATH=/usr/local/lib/node:/usr/local/lib/node_modules:$NODE_PATH
 
 fpath=(~/.zsh/functions $fpath)
 
