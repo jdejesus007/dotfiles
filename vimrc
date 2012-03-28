@@ -50,6 +50,14 @@ if has("autocmd")
   autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
   autocmd FileType php set omnifunc=phpcomplete#CompletePHP
   autocmd FileType c set omnifunc=ccomplete#Complete
+  autocmd FileType cpp set omnifunc=omni#cpp#Complete#Main
+  autocmd FileType ruby set omnifunc=rubycomplete#Complete
+
+  " Turn on Ruby Code Completetion
+  let g:rubycomplete_buffer_loading = 1
+  let g:rubycomplete_classes_in_global = 1
+  let g:rubycomplete_rails = 1
+
 
   " Set File type to 'text' for files ending in .txt
   autocmd BufNewFile,BufRead *.txt setfiletype text
