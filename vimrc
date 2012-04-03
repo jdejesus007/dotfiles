@@ -165,17 +165,17 @@ imap <Tab> <C-N>
 
 imap <C-L> <Space>=><Space>
 
+" Local config
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
+
 " Display extra whitespace
 set list listchars=tab:»·,trail:·
 
 " Edit routes
 command! Rroutes :e config/routes.rb
 command! Rschema :e db/schema.rb
-
-" Local config
-if filereadable(".vimrc.local")
-  source .vimrc.local
-endif
 
 " Use Ack instead of Grep when available
 if executable("ack")
