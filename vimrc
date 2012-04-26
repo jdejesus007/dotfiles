@@ -185,6 +185,7 @@ if executable("ack")
 endif
 
 " Color scheme
+set t_Co=256
 colorscheme railscasts
 "colorscheme sienna
 " highlight NonText guibg=#060606
