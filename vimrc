@@ -34,6 +34,9 @@ set nowrap
 set textwidth=78
 set colorcolumn=80
 
+" Turn on Mouse Capture
+set mouse=a
+
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
   " Enable file type detection.
