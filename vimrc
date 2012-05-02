@@ -49,8 +49,8 @@ if has("autocmd")
   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
   autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
   autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-  autocmd FileType c set omnifunc=ccomplete#Complete
-"  autocmd FileType cpp set omnifunc=omni#cpp#Complete#Main
+  " autocmd FileType c set omnifunc=ccomplete#Complete
+  " autocmd FileType cpp set omnifunc=omni#cpp#Complete#Main
   autocmd FileType ruby set omnifunc=rubycomplete#Complete
 
   let g:clang_complete_auto = 1
@@ -190,7 +190,7 @@ colorscheme railscasts
 "colorscheme sienna
 " highlight NonText guibg=#060606
 " highlight Folded  guibg=#0A0A0A guifg=#9090D0
-
+highlight Pmenu ctermfg=black ctermbg=grey guibg=grey30
 " Numbers
 set number
 set numberwidth=5
@@ -230,3 +230,5 @@ call pathogen#infect()
 
 " Change ColorColumn Color
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
+
+map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
