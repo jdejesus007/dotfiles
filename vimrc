@@ -198,14 +198,13 @@ highlight Pmenu ctermfg=black ctermbg=grey guibg=grey30
 set number
 set numberwidth=5
 
-" Snippets are activated by Shift+Tab
-let g:snippetsEmu_key = "<S-Tab>"
-
 " Tab completion options
 " (only complete to the longest unambiguous match, and show a menu)
 set completeopt=longest,menu
 set wildmode=list:longest,list:full
 set complete=.,t
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-p>"
 
 " case only matters with mixed case expressions
 set ignorecase
