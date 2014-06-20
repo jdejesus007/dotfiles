@@ -4,8 +4,10 @@ else
   export PS1='%3~$(git_info_for_prompt)%# '
 fi
 
-export EDITOR='subl -w'
-export PATH=/opt/local/bin:/opt/local/sbin:`npm bin`:$PATH
+export EDITOR='vim'
+export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=/usr/local/share/npm/bin:$PATH
+# export PATH=`npm bin`:$PATH
 export NODE_PATH=/usr/local/lib/node:/usr/local/lib/node_modules:$NODE_PATH
 
 fpath=(~/.zsh/functions $fpath)
@@ -37,12 +39,14 @@ setopt HIST_REDUCE_BLANKS
 
 zle -N newtab
 
+bindkey -v
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
 bindkey '^[[5D' beginning-of-line
 bindkey '^[[5C' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^[^N' newtab
-bindkey '^?' backward-delete-char 
+bindkey '^?' backward-delete-char
+bindkey '^R' history-incremental-search-backward
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.

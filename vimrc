@@ -55,6 +55,14 @@ if has("autocmd")
   " autocmd FileType c set omnifunc=ccomplete#Complete
   " autocmd FileType cpp set omnifunc=omni#cpp#Complete#Main
   autocmd FileType ruby set omnifunc=rubycomplete#Complete
+  autocmd FileType go set expandtab!
+
+  let g:SuperTabCRMapping = 0
+  let g:SuperTabDefaultCompletionType = 'context'
+  autocmd FileType *
+    \ if &omnifunc != '' |
+    \   call SuperTabChain(&omnifunc, '<c-p>') |
+    \ endif
 
   let g:clang_complete_auto = 1
 
@@ -66,6 +74,7 @@ if has("autocmd")
 
   " Set File type to 'text' for files ending in .txt
   autocmd BufNewFile,BufRead *.txt setfiletype text
+  autocmd BufNewFile,BufRead todo.txt,*.task,*.tasks  setfiletype task
 
   " Enable soft-wrapping for text files
   autocmd FileType text,markdown,html,xhtml,eruby setlocal wrap linebreak nolist
@@ -94,13 +103,21 @@ else
 
 endif " has("autocmd")
 
-" if has("folding")
-  " set foldenable
-  " set foldmethod=syntax
-  " set foldlevel=1
-  " set foldnestmax=2
-  " set foldtext=strpart(getline(v:foldstart),0,50).'\ ...\ '.substitute(getline(v:foldend),'^[\ #]*','','g').'\ '
-" endif
+if has("folding")
+  set foldenable
+  set foldlevel=1
+  set foldnestmax=3
+  set foldtext=strpart(getline(v:foldstart),0,50).'\ ...\ '.substitute(getline(v:foldend),'^[\ #]*','','g').'\ '
+
+  let javaScript_fold=1         " JavaScript
+  let perl_fold=1               " Perl
+  let php_folding=1             " PHP
+  let r_syntax_folding=1        " R
+  let ruby_fold=1               " Ruby
+  let sh_fold_enabled=1         " sh
+  let vimsyn_folding='af'       " Vim script
+  let xml_syntax_folding=1      " XML
+endif
 
 " Softtabs, 2 spaces
 set tabstop=2
@@ -205,15 +222,13 @@ set numberwidth=5
 set completeopt=longest,menu
 set wildmode=list:longest,list:full
 set complete=.,t
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
 
 " case only matters with mixed case expressions
 set ignorecase
 set smartcase
 
 " Tags
-let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
+map <Leader>` :TagbarToggle<CR>
 set tags=./tags;
 
 let g:fuf_splitPathMatching=1
@@ -232,7 +247,22 @@ endfunction
 map <Leader>w :call OpenURL()<CR>
 call pathogen#infect()
 
+" Beautification
+if exists(":Tabularize")
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a: :Tabularize /:<CR>
+  vmap <Leader>a: :Tabularize /:<CR>
+endif
+
+" Don't confirm switching when a buffer is not saved
+set hidden
+
 " Change ColorColumn Color
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
 map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+map <leader>r :make<CR>
+
+map <leader>tt :call Toggle_task_status()<CR>
+

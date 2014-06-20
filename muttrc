@@ -1,0 +1,131 @@
+set imap_user   = kaylegishen@gmail.com
+#set imap_pass = `security find-generic-password -w -s mutt -a "kaylegishen@gmail.com"`
+set smtp_url    = smtp://kaylegishen@smtp.gmail.com:587/
+#set smtp_pass = `security find-generic-password -w -s mutt -a "kaylegishen@gmail.com"`
+set from    = kaylegishen@gmail.com
+set realname    = "Kayle Gishen"
+set editor    = 'vim -c "set spell spelllang=en_us"'
+
+set timeout = 3
+set mail_check = 900
+
+# Don't let your firewall kill your idle connection.
+set imap_keepalive  = 900
+set imap_idle
+set imap_check_subscribed
+unset imap_passive
+unset imap_peek
+
+# Do not copy sent mail.  Gmail smtp already does this.
+set copy    = no
+
+set folder    = imaps://imap.gmail.com:993
+set spoolfile   = +INBOX #or +[Gmail]/Important
+set postponed   = +[Gmail]/Drafts
+unset record
+mailboxes "=INBOX"
+
+# This is using the 'trash' patch.
+set trash   = +[Gmail]/Trash
+
+
+# Cache
+set header_cache  = ~/.mutt/cache/headers
+set message_cachedir  = ~/.mutt/cache/bodies
+set certificate_file  = ~/.mutt/certificates
+
+# Gmail style keybindings
+bind  editor <space> noop
+bind  index,pager c  mail     #Compose
+macro index,pager e  "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive conversation"
+bind  generic     x  tag-entry    #Select Conversation
+bind  index       x  tag-thread   #Select Conversation
+bind  pager       x  tag-message  #Select Conversation
+bind  index,pager s  flag-message #Star a message
+macro index,pager +  <save-message>=[Gmail]/Important<enter><enter> "Mark as important"
+macro index,pager !  <save-message>=[Gmail]/Spam<enter><enter> "Report spam"
+bind  index,pager a  group-reply  #Reply all
+bind  index,pager \# delete-thread  #Delete
+bind  index,pager l  copy-message #Label
+bind  index,pager v  save-message #Move to
+macro index,pager I  <set-flag>O  "Mark as read"
+macro index,pager U  <clear-flag>O  "Mark as unread"
+macro index,pager ga "<change-folder>=[Gmail]/All Mail<enter>"  "Go to all mail"
+macro index,pager gs <change-folder>=[Gmail]/Starred<enter> "Go to 'Starred'"
+macro index,pager gd <change-folder>=[Gmail]/Drafts<enter>  "Go to 'Drafts'"
+macro index,pager gl <change-folder>?       "Go to 'Label'"
+macro index,pager gi <change-folder>=INBOX<enter>     "Go to inbox"
+macro index,pager gt "<change-folder>=[Gmail]/Sent Mail<enter>" "Go to 'Sent Mail'"
+folder-hook +INBOX 'macro index,pager y "<save-message>=[Gmail]/All Mail<enter><enter>" "Archive conversation"'
+folder-hook +[Gmail]/Trash macro index,pager y <save-message>=INBOX<enter><enter> "Move to inbox"
+folder-hook +[Gmail]/Starred bind  index,pager y flag-message #"Toggle star"
+
+# This should be ' »›-‹L' to match Gmail, but $to_chars breaks on unicode.
+set to_chars    = ' +>-<L'
+# Don't move read mail.
+set move    = no
+
+set query_command="goobook query '%s'"
+bind editor <Tab> complete-query
+macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
+
+# Sort by newest conversation first.
+set sort    = reverse-threads
+set sort_aux    = last-date-received
+
+# Contact aliases, could also use `goobook`.
+#set alias_file    = ~/.mutt/aliases
+#set sort_alias    = alias
+#set reverse_alias = yes
+#set reverse_name  = yes
+#source $alias_file
+
+#GPG
+set pgp_decode_command="gpg %?p?--passphrase-fd 0? --no-verbose --batch --output - %f"
+set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0xCAC6ACD4 -- -r %r -- %f"
+set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0x00000000 -- -r %r -- %f"
+set pgp_import_command="gpg --no-verbose --import -v %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
+
+# specify the uid to use when encrypting/signing
+set pgp_sign_as=0xCAC6ACD4
+
+# this set the number of seconds to keep in memory the passpharse used to encrypt/sign
+# the more the less secure it will be
+set pgp_timeout=60
+
+# it's a regexp used against the GPG output: if it matches some line of the output
+# then mutt considers the message a good signed one (ignoring the GPG exit code)
+set pgp_good_sign="^gpg: Good signature from"
+
+# mutt uses by default PGP/GPG to sign/encrypt messages
+# if you want to use S-mime instead set the smime_is_default variable to yes
+
+# automatically sign all outcoming messages
+set crypt_autosign
+# sign only replies to signed messages
+#set crypt_replysign
+
+# automatically encrypt outcoming messages
+#set crypt_autoencrypt=yes
+# encrypt only replies to signed messages
+#set crypt_replyencrypt=yes
+# encrypt and sign replies to encrypted messages
+#set crypt_replysignencrypted=yes
+
+# automatically verify the sign of a message when opened
+set crypt_verify_sig=yes
+
+macro index,pager,attach 'V' "<enter-command>set pipe_decode<enter><pipe-message>cat >~/.cache/mutt/mail.html && $BROWSER ~/.cache/mutt/mail.html && sleep 5 && rm ~/.cache/mutt/mail.html<enter>"
+
+set mailcap_path=~/.mailcap
+auto_view text/html
+set implicit_autoview=yes
+alternative_order text/plain text/encriched text/html

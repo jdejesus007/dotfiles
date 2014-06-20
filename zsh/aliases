@@ -20,13 +20,13 @@ alias grm="git status | grep deleted | awk '{print \$3}' | xargs git rm"
 alias changelog='git log `git log -1 --format=%H -- CHANGELOG*`..; cat CHANGELOG*'
 
 # rails
-alias sc='rails c'
-alias ss='rails s'
-alias sg='rails g'
+alias sc='bundle exec rails c'
+alias ss='bundle exec rails s'
+alias sg='bundle exec rails g'
 alias a='autotest -rails'
 alias tlog='tail -f log/development.log'
-alias scaffold='rails g scaffold'
-alias migrate='rake db:migrate db:test:clone'
+alias scaffold='bundle exec rails g scaffold'
+alias migrate='bundle exec rake db:migrate db:test:clone'
 alias rst='touch tmp/restart.txt'
 
 # commands starting with % for pasting from web
@@ -42,3 +42,12 @@ alias start_mongo='mongod run --config /usr/local/Cellar/mongodb/1.8.2-x86_64/mo
 # Postgres
 alias start_postgres='pg_ctl -D /usr/local/var/postgres -l /usr/local/var/postgres/server.log start'
 alias stop_postgres='pg_ctl -D /usr/local/var/postgres stop -s -m fast'
+
+#alias subl='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+
+#Bundler
+alias be='bundle exec'
+alias biv='bundle install --path vendor/bundle'
+
+#Heroku Go
+alias goku='heroku create -b https://github.com/kr/heroku-buildpack-go.git'

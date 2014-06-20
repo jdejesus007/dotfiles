@@ -7,3 +7,8 @@ source ~/.bash/config
 if [ -f ~/.localrc ]; then
   source ~/.localrc
 fi
+
+PATH=$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims # Add RVM to PATH for scripting
+
+### Added by the Heroku Toolbelt
+export PATH="/usr/local/heroku/bin:$PATH"
