@@ -52,10 +52,14 @@ if has("autocmd")
   autocmd FileType css set omnifunc=csscomplete#CompleteCSS
   autocmd FileType xml set omnifunc=xmlcomplete#CompleteTags
   autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-  " autocmd FileType c set omnifunc=ccomplete#Complete
-  " autocmd FileType cpp set omnifunc=omni#cpp#Complete#Main
+  "autocmd FileType c set omnifunc=ccomplete#Complete
+  "autocmd FileType cpp set omnifunc=omni#cpp#Complete#Main
   autocmd FileType ruby set omnifunc=rubycomplete#Complete
   autocmd FileType go set expandtab!
+
+  let g:UltiSnipsExpandTrigger="<c-j>"
+  let g:UltiSnipsJumpForwardTrigger="<c-l>"
+  let g:UltiSnipsJumpBackwardTrigger="<c-h>"
 
   let g:SuperTabCRMapping = 0
   let g:SuperTabDefaultCompletionType = 'context'
@@ -64,7 +68,8 @@ if has("autocmd")
     \   call SuperTabChain(&omnifunc, '<c-p>') |
     \ endif
 
-  let g:clang_complete_auto = 1
+  let g:ycm_confirm_extra_conf = 0
+  let g:clang_complete_auto = 0
 
   " Turn on Ruby Code Completetion
   let g:rubycomplete_buffer_loading = 1
@@ -134,21 +139,21 @@ let mapleader = ","
 map <Leader>R :e doc/README_FOR_APP<CR>
 
 " Leader shortcuts for Rails commands
-map <Leader>m :Rmodel
-map <Leader>c :Rcontroller
-map <Leader>v :Rview
-map <Leader>u :Runittest
-map <Leader>f :Rfunctionaltest
-map <Leader>tm :RTmodel
-map <Leader>tc :RTcontroller
-map <Leader>tv :RTview
-map <Leader>tu :RTunittest
-map <Leader>tf :RTfunctionaltest
-map <Leader>sm :RSmodel
-map <Leader>sc :RScontroller
-map <Leader>sv :RSview
-map <Leader>su :RSunittest
-map <Leader>sf :RSfunctionaltest
+map <Leader>rm :Rmodel
+map <Leader>rc :Rcontroller
+map <Leader>rv :Rview
+map <Leader>ru :Runittest
+map <Leader>rf :Rfunctionaltest
+map <Leader>rtm :RTmodel
+map <Leader>rtc :RTcontroller
+map <Leader>rtv :RTview
+map <Leader>rtu :RTunittest
+map <Leader>rtf :RTfunctionaltest
+map <Leader>rsm :RSmodel
+map <Leader>rsc :RScontroller
+map <Leader>rsv :RSview
+map <Leader>rsu :RSunittest
+map <Leader>rsf :RSfunctionaltest
 
 " Hide search highlighting
 map <Leader>h :set invhls <CR>
@@ -248,12 +253,10 @@ map <Leader>w :call OpenURL()<CR>
 call pathogen#infect()
 
 " Beautification
-if exists(":Tabularize")
-  nmap <Leader>a= :Tabularize /=<CR>
-  vmap <Leader>a= :Tabularize /=<CR>
-  nmap <Leader>a: :Tabularize /:<CR>
-  vmap <Leader>a: :Tabularize /:<CR>
-endif
+nmap <Leader>a= :Tabularize decl_assign<CR>
+vmap <Leader>a= :Tabularize decl_assign<CR>
+nmap <Leader>a: :Tabularize /: <CR>
+vmap <Leader>a: :Tabularize /: <CR>
 
 " Don't confirm switching when a buffer is not saved
 set hidden
@@ -261,8 +264,19 @@ set hidden
 " Change ColorColumn Color
 highlight ColorColumn ctermbg=lightgrey guibg=lightgrey
 
-map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
-map <leader>r :make<CR>
+map <leader>sw :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+map <leader>mr :make<CR>
 
 map <leader>tt :call Toggle_task_status()<CR>
 
+map <C-F12> :!ctags -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
+" Go mappings
+au FileType go nmap <leader>r <Plug>(go-run)
+au FileType go nmap <leader>b <Plug>(go-build)
+au FileType go nmap <leader>t <Plug>(go-test)
+au FileType go nmap <leader>c <Plug>(go-coverage)
+au FileType go nmap <Leader>gd <Plug>(go-doc)
+au FileType go nmap gds <Plug>(go-def-split)
+au FileType go nmap <Leader>i <Plug>(go-info)
+au FileType go nmap <Leader>s <Plug>(go-implements)
