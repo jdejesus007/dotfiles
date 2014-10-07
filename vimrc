@@ -170,6 +170,18 @@ if exists(':Tabularize')
   vmap <Leader>a: :Tabularize /: <CR>
 endif
 
+" Configure Ultisnips + YCM to play nice
+let g:UltiSnipsExpandTrigger = "<nop>"
+let g:ulti_expand_or_jump_res = 0
+function! ExpandSnippetOrCarriageReturn()
+    let snippet = UltiSnips#ExpandSnippetOrJump()
+    if g:ulti_expand_or_jump_res > 0
+        return snippet
+    else
+        return "\<CR>"
+    endif
+endfunction
+inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
 " Local config
 if filereadable(expand("~/.vimrc.local"))
