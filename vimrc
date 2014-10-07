@@ -112,9 +112,29 @@ map <leader>tt :call Toggle_task_status()<CR>
 set hidden
 
 if has("autocmd")
+  " Set File type to 'text' for files ending in .txt
+  autocmd BufNewFile,BufRead *.txt setfiletype text
   autocmd BufNewFile,BufRead todo.txt,*.task,*.tasks,*.todo  setfiletype task
+
+  " Enable soft-wrapping for text files
+  autocmd FileType text,markdown,html,xhtml,eruby setlocal wrap linebreak nolist
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+
   " Automatically load .vimrc source when saved
   autocmd BufWritePost .vimrc source $MYVIMRC
+
+  augroup END
 endif
 
 " Hide search highlighting
