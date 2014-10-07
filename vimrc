@@ -22,6 +22,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'samsonw/vim-task'
 
 """"""""" Snippets """""""""""
 " Track the engine.
@@ -111,6 +112,7 @@ map <leader>tt :call Toggle_task_status()<CR>
 set hidden
 
 if has("autocmd")
+  autocmd BufNewFile,BufRead todo.txt,*.task,*.tasks,*.todo  setfiletype task
   " Automatically load .vimrc source when saved
   autocmd BufWritePost .vimrc source $MYVIMRC
 endif
