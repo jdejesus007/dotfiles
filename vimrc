@@ -62,6 +62,10 @@ colorscheme railscasts
 " Enable the following to keep terminal color
 "hi Normal guibg=NONE ctermbg=NONE
 
+" Show line numbers
+set number
+set numberwidth=5
+
 " Turn on Mouse Capture
 set mouse=a
 
