@@ -174,6 +174,12 @@ endif
 map <Leader>` :TagbarToggle<CR>
 set tags=./tags;
 
+" Friendly save - will not re-enter insert mode
+nmap <Leader>w :w<CR>
+imap <Leader>w <Esc><Leader>w
+" will restore visual select
+vmap <Leader>w <Esc><Leader>wgv
+
 " Beautification
 
 if exists(':Tabularize')
