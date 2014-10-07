@@ -61,6 +61,8 @@ colorscheme railscasts
 
 " Enable the following to keep terminal color
 "hi Normal guibg=NONE ctermbg=NONE
+hi clear SignColumn
+
 
 " Show line numbers
 set number
