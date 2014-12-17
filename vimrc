@@ -113,7 +113,8 @@ au FileType go nmap <Leader>s <Plug>(go-implements)
 map <leader>sw :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 
 " Run make
-map <leader>mr :make<CR>
+map <leader>mk :Make<CR>
+map <leader>mkr :Make run<CR>
 
 " Tasks
 map <leader>tt :call Toggle_task_status()<CR>
