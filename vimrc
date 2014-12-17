@@ -219,3 +219,6 @@ endif
 " Let YCM load config files in code folder automatically
 let g:ycm_extra_conf_globlist = ['~/code/*','!~/*']
 
+" Change CamelCase to snake_case
+nmap <Leader>cts :s#\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>
+vmap <Leader>cts :s#\%V\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>
