@@ -54,6 +54,9 @@ set ruler      " show the cursor position all the time
 set showcmd    " display incomplete commands
 set incsearch  " do incremental searching
 
+" disable completopt preview
+set completeopt=longest,menuone
+
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
@@ -211,3 +214,7 @@ inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" 
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
+" Let YCM load config files in code folder automatically
+let g:ycm_extra_conf_globlist = ['~/code/*','!~/*']
+
