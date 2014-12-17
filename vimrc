@@ -23,6 +23,13 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'samsonw/vim-task'
+Plugin 'Raimondi/delimitMate' "auto close quotes, paren, etc
+Plugin 'rizzatti/dash.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'mattn/emmet-vim'
+Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'tpope/vim-bundler'
+Plugin 'tpope/vim-rails'
 
 """"""""" Snippets """""""""""
 " Track the engine.
