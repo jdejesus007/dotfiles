@@ -65,9 +65,10 @@ set to_chars    = ' +>-<L'
 # Don't move read mail.
 set move    = no
 
+# Add the sender to Google Contacts
 set query_command="goobook query '%s'"
 bind editor <Tab> complete-query
-macro index,pager a "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
+macro index,pager gcc "<pipe-message>goobook add<return>" "add the sender address to Google contacts"
 
 # Sort by newest conversation first.
 set sort    = reverse-threads
@@ -132,3 +133,5 @@ set mailcap_path=~/.mailcap
 auto_view text/html
 set implicit_autoview=yes
 alternative_order text/plain text/encriched text/html
+
+set smtp_authenticators = 'gssapi:login'
