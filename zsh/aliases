@@ -54,3 +54,7 @@ alias goku='heroku create -b https://github.com/kr/heroku-buildpack-go.git'
 
 # Commandline Fu
 alias clock='while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &'
+
+# Keyboard
+alias disable_keyboard='sudo kextunload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/'
+alias enable_keyboard='sudo kextload /System/Library/Extensions/AppleUSBTopCase.kext/Contents/PlugIns/AppleUSBTCKeyboard.kext/'
