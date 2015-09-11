@@ -30,6 +30,21 @@ Plugin 'mattn/emmet-vim'
 Plugin 'mustache/vim-mustache-handlebars'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-abolish'
+Plugin 'scrooloose/syntastic'
+Plugin 'marijnh/tern_for_vim'
+Plugin 'wavded/vim-stylus.git'
+Plugin 'peterhoeg/vim-qml'
+Plugin 'vim-scripts/dbext.vim'
+Plugin 'farseer90718/vim-taskwarrior'
+Plugin 'rking/ag.vim'
+Plugin 'bling/vim-airline'
+Plugin 'vim-scripts/loremipsum'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'tpope/vim-dispatch'
+Plugin 'janko-m/vim-test'
+Plugin 'FredKSchott/CoVim'
+
 
 """"""""" Snippets """""""""""
 " Track the engine.
@@ -55,7 +70,7 @@ set showcmd    " display incomplete commands
 set incsearch  " do incremental searching
 
 " disable completopt preview
-set completeopt=longest,menuone
+set completeopt=menuone
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -112,9 +127,12 @@ au FileType go nmap <Leader>s <Plug>(go-implements)
 " Swap header and implementation
 map <leader>sw :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 
-" Run make
+" Run Make - this runs the !make
 map <leader>mk :Make<CR>
 map <leader>mkr :Make run<CR>
+
+" Run make - this runs makeprg
+map <leader>r :make<CR>
 
 " Tasks
 map <leader>tt :call Toggle_task_status()<CR>
@@ -126,9 +144,16 @@ if has("autocmd")
   " Set File type to 'text' for files ending in .txt
   autocmd BufNewFile,BufRead *.txt setfiletype text
   autocmd BufNewFile,BufRead todo.txt,*.task,*.tasks,*.todo  setfiletype task
+  autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
   " Enable soft-wrapping for text files
   autocmd FileType text,markdown,html,xhtml,eruby setlocal wrap linebreak nolist
+
+  " Enable indent folds for tasks
+  autocmd FileType task set foldmethod=indent
+
+  " Enable indent folds for qml
+  autocmd FileType qml set foldmethod=indent
 
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
@@ -172,13 +197,20 @@ vmap D y'>p
 vmap P p :call setreg('"', getreg('0')) <CR>
 
 " Display extra whitespace
-set list listchars=tab:»·,trail:·
+"set list listchars=tab:»·,trail:·
 " Delete trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-" Use Ack instead of Grep when available
-if executable("ack")
-  set grepprg=ack\ -H\ --nogroup\ --nocolor\ --ignore-dir=tmp\ --ignore-dir=coverage
+" Use Ag instead of Grep when available
+if executable("ag")
+  set grepprg="ag --vimgrep"
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+" Enable Ninja if available
+if executable("ninja") && filereadable("./build.ninja")
+  command! Ninja execute "!ninja"
+  set makeprg=ninja
 endif
 
 " Tags
@@ -195,8 +227,8 @@ vmap <Leader>w <Esc><Leader>wgv
 
 nmap <Leader>a= :Tabularize decl_assign<CR>
 vmap <Leader>a= :Tabularize decl_assign<CR>
-nmap <Leader>a: :Tabularize /: <CR>
-vmap <Leader>a: :Tabularize /: <CR>
+nmap <Leader>a: :Tabularize /:/l2r2<CR>
+vmap <Leader>a: :Tabularize /:/l2r2<CR>
 
 " Configure Ultisnips + YCM to play nice
 let g:UltiSnipsExpandTrigger = "<nop>"
@@ -222,3 +254,21 @@ let g:ycm_extra_conf_globlist = ['~/code/*','!~/*']
 " Change CamelCase to snake_case
 nmap <Leader>cts :s#\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>
 vmap <Leader>cts :s#\%V\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>
+
+" Ctrl-P Hide build/dist folders
+let g:ctrlp_custom_ignore = '\v(build|dist|tmp|bower_components|node_modules|cordova|build_cache|Godeps)$'
+
+" Setup Vim Test
+let test#strategy = "dispatch"
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+nmap <silent> <leader>a :TestSuite<CR>
+nmap <silent> <leader>l :TestLast<CR>
+nmap <silent> <leader>g :TestVisit<CR>
+
+" Use Go Imports
+let g:go_fmt_command = "goimports"
+
+" Collaborative Vim
+let CoVim_default_name = "kayle"
+let CoVim_default_port = "1337"
