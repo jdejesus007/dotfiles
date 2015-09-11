@@ -86,8 +86,8 @@ set pgp_verify_command="gpg --no-verbose --batch --output - --verify %s %f"
 set pgp_decrypt_command="gpg --passphrase-fd 0 --no-verbose --batch --output - %f"
 set pgp_sign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --detach-sign --textmode %?a?-u %a? %f"
 set pgp_clearsign_command="gpg --no-verbose --batch --output - --passphrase-fd 0 --armor --textmode --clearsign %?a?-u %a? %f"
-set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust --encrypt-to 0xCAC6ACD4 -- -r %r -- %f"
-set pgp_encrypt_sign_command="pgpewrap gpg --passphrase-fd 0 --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust --encrypt-to 0x00000000 -- -r %r -- %f"
+set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="pgpewrap gpg --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
 set pgp_import_command="gpg --no-verbose --import -v %f"
 set pgp_export_command="gpg --no-verbose --export --armor %r"
 set pgp_verify_key_command="gpg --no-verbose --batch --fingerprint --check-sigs %r"
@@ -95,7 +95,7 @@ set pgp_list_pubring_command="gpg --no-verbose --batch --with-colons --list-keys
 set pgp_list_secring_command="gpg --no-verbose --batch --with-colons --list-secret-keys %r"
 
 # specify the uid to use when encrypting/signing
-set pgp_sign_as=0xCAC6ACD4
+set pgp_sign_as=CAC6ACD4
 
 # this set the number of seconds to keep in memory the passpharse used to encrypt/sign
 # the more the less secure it will be
@@ -118,12 +118,14 @@ set crypt_autosign
 # encrypt only replies to signed messages
 #set crypt_replyencrypt=yes
 # encrypt and sign replies to encrypted messages
-#set crypt_replysignencrypted=yes
+set crypt_replysignencrypted=yes
 
 # automatically verify the sign of a message when opened
 set crypt_verify_sig=yes
 
-macro index,pager,attach 'V' "<enter-command>set pipe_decode<enter><pipe-message>cat >~/.cache/mutt/mail.html && $BROWSER ~/.cache/mutt/mail.html && sleep 5 && rm ~/.cache/mutt/mail.html<enter>"
+# automatically decode gpg encrypted messages
+set pgp_auto_decode=yes
+
 macro index,pager,attach 'V' "<pipe-message>cat > ~/.cache/mutt/mail.html && open ~/.cache/mutt/mail.html && sleep 5 && rm ~/.cache/mutt/mail.html<enter>"
 
 set mailcap_path=~/.mailcap
