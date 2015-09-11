@@ -9,6 +9,7 @@ export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 export PATH=/usr/local/share/npm/bin:$PATH
 # export PATH=`npm bin`:$PATH
 export NODE_PATH=/usr/local/lib/node:/usr/local/lib/node_modules:$NODE_PATH
+export WWW_HOME=https://www.google.com
 
 fpath=(~/.zsh/functions $fpath)
 
