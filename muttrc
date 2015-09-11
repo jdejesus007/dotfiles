@@ -124,6 +124,7 @@ set crypt_autosign
 set crypt_verify_sig=yes
 
 macro index,pager,attach 'V' "<enter-command>set pipe_decode<enter><pipe-message>cat >~/.cache/mutt/mail.html && $BROWSER ~/.cache/mutt/mail.html && sleep 5 && rm ~/.cache/mutt/mail.html<enter>"
+macro index,pager,attach 'V' "<pipe-message>cat > ~/.cache/mutt/mail.html && open ~/.cache/mutt/mail.html && sleep 5 && rm ~/.cache/mutt/mail.html<enter>"
 
 set mailcap_path=~/.mailcap
 auto_view text/html
