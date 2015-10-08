@@ -25,10 +25,6 @@ set postponed   = +[Gmail]/Drafts
 unset record
 mailboxes "=INBOX"
 
-# This is using the 'trash' patch.
-set trash   = +[Gmail]/Trash
-
-
 # Cache
 set header_cache  = ~/.mutt/cache/headers
 set message_cachedir  = ~/.mutt/cache/bodies
