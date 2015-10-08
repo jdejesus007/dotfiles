@@ -250,6 +250,11 @@ endif
 
 " Let YCM load config files in code folder automatically
 let g:ycm_extra_conf_globlist = ['~/code/*','!~/*']
+let g:ycm_complete_in_comments = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+let g:ycm_add_preview_to_completeopt = 1
+let g:ycm_autoclose_preview_window_after_insertion = 1
+
 
 " Change CamelCase to snake_case
 nmap <Leader>cts :s#\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>
@@ -272,3 +277,7 @@ let g:go_fmt_command = "goimports"
 " Collaborative Vim
 let CoVim_default_name = "kayle"
 let CoVim_default_port = "1337"
+
+" Project Specific VimRC
+set exrc
+set secure
