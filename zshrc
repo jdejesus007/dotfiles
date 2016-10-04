@@ -8,6 +8,7 @@
 export PATH="$HOME/.rbenv/bin:$PATH"
 
 typeset -U PATH # remove duplicate entries
-eval "$(rbenv init - zsh)"
 
-export RBXOPT=-X19
+
+# added by travis gem
+[ -f /Users/kayle/.travis/travis.sh ] && source /Users/kayle/.travis/travis.sh

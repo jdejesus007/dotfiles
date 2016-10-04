@@ -12,3 +12,6 @@ PATH=$PATH:$HOME/.rbenv/bin:$HOME/.rbenv/shims # Add RVM to PATH for scripting
 
 ### Added by the Heroku Toolbelt
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# added by travis gem
+[ -f /Users/kayle/.travis/travis.sh ] && source /Users/kayle/.travis/travis.sh

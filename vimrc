@@ -32,11 +32,11 @@ Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-abolish'
 Plugin 'scrooloose/syntastic'
-Plugin 'marijnh/tern_for_vim'
+Plugin 'ternjs/tern_for_vim'
 Plugin 'wavded/vim-stylus.git'
 Plugin 'peterhoeg/vim-qml'
 Plugin 'vim-scripts/dbext.vim'
-Plugin 'farseer90718/vim-taskwarrior'
+Plugin 'blindFS/vim-taskwarrior'
 Plugin 'rking/ag.vim'
 Plugin 'bling/vim-airline'
 Plugin 'vim-scripts/loremipsum'
@@ -44,6 +44,11 @@ Plugin 'wakatime/vim-wakatime'
 Plugin 'tpope/vim-dispatch'
 Plugin 'janko-m/vim-test'
 Plugin 'FredKSchott/CoVim'
+Plugin 'rust-lang/rust.vim'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
+Plugin 'evanmiller/nginx-vim-syntax'
 
 
 """"""""" Snippets """""""""""
@@ -96,6 +101,10 @@ set numberwidth=5
 
 " Turn on Mouse Capture
 set mouse=a
+" Add support for iTerm2 and Large windows
+if has('mouse_sgr')
+  set ttymouse=sgr
+endif
 
 " Switch wrap off for everything
 set formatoptions=tcqw
@@ -105,6 +114,7 @@ set colorcolumn=80
 
 " Softtabs, 2 spaces
 set tabstop=2
+set softtabstop=2
 set shiftwidth=2
 set expandtab
 
@@ -140,6 +150,9 @@ map <leader>tt :call Toggle_task_status()<CR>
 " Don't confirm switching when a buffer is not saved
 set hidden
 
+" Default to syntax based folding
+set foldmethod=syntax
+
 if has("autocmd")
   " Set File type to 'text' for files ending in .txt
   autocmd BufNewFile,BufRead *.txt setfiletype text
@@ -172,6 +185,11 @@ if has("autocmd")
 
   augroup END
 endif
+
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+noremap <space> za
 
 " Hide search highlighting
 map <Leader>h :set invhls <CR>
@@ -273,6 +291,10 @@ nmap <silent> <leader>g :TestVisit<CR>
 
 " Use Go Imports
 let g:go_fmt_command = "goimports"
+" Turn on error checking with Go/Syntastic
+let g:syntastic_go_checkers = ['gofmt', 'golint', 'govet', 'errcheck']
+"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
+let g:go_list_type = "quickfix"
 
 " Collaborative Vim
 let CoVim_default_name = "kayle"
@@ -281,3 +303,22 @@ let CoVim_default_port = "1337"
 " Project Specific VimRC
 set exrc
 set secure
+
+" Customize syntax highlighting
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+
+au BufRead,BufNewFile * syn match simpleIterator '\C[^a-zA-Z][ijk][^a-zA-Z]'
+
+function! CustomizeSyntax()
+  highlight Comment cterm=italic ctermbg=bg ctermfg=137
+  highlight Identifier cterm=italic
+  highlight Constant cterm=bold
+  highlight simpleIterator cterm=italic
+  highlight Special ctermfg=67
+endfunction
+au BufRead,BufNewFile * call CustomizeSyntax()
+
+" Rust Lang
+let g:rustfmt_autosave = 1 " Enable auto format on save
+let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.9.0/src'

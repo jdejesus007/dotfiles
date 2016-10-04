@@ -4,12 +4,16 @@ else
   export PS1='%3~$(git_info_for_prompt)%# '
 fi
 
+setopt promptsubst
+export PS1=$'%U${(r:$COLUMNS:: :)}%u'$PS1
+
 export EDITOR='vim'
 export PATH=/usr/local/bin:/opt/local/bin:/opt/local/sbin:$PATH
 export PATH=/usr/local/share/npm/bin:$PATH
 # export PATH=`npm bin`:$PATH
 export NODE_PATH=/usr/local/lib/node:/usr/local/lib/node_modules:$NODE_PATH
 export WWW_HOME=https://www.google.com
+export RBENV_ROOT=/usr/local/var/rbenv
 
 fpath=(~/.zsh/functions $fpath)
 
@@ -50,4 +54,4 @@ bindkey '^[^N' newtab
 bindkey '^?' backward-delete-char
 bindkey '^R' history-incremental-search-backward
 
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
+if which rbenv > /dev/null; then eval "$(rbenv init - zsh)"; fi
