@@ -44,6 +44,7 @@ Plugin 'tpope/vim-vinegar'
 Plugin 'valloric/YouCompleteMe'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/loremipsum'
+Plugin 'vim-scripts/SyntaxRange'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'wavded/vim-stylus.git'
 
