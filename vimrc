@@ -320,3 +320,10 @@ au BufRead,BufNewFile * call CustomizeSyntax()
 " Rust Lang
 let g:rustfmt_autosave = 1 " Enable auto format on save
 let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.9.0/src'
+
+if &term =~ 'tmux'
+  " disable Background Color Erase (BCE) so that color schemes
+  " render properly when inside 256-color tmux and GNU screen.
+  " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
+  set t_ut=
+endif
