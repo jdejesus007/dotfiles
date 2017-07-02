@@ -33,14 +33,16 @@ Plugin 'rking/ag.vim'
 Plugin 'rust-lang/rust.vim'
 Plugin 'samsonw/vim-task'
 Plugin 'scrooloose/syntastic'
+Plugin 'skywind3000/asyncrun.vim'
 Plugin 'ternjs/tern_for_vim'
 Plugin 'tpope/vim-abolish'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-commentary'
-Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-vinegar'
+Plugin 'trayo/vim-ginkgo-snippets'
+Plugin 'trayo/vim-gomega-snippets'
 Plugin 'valloric/YouCompleteMe'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/loremipsum'
@@ -125,7 +127,8 @@ let mapleader = ","
 " Go mappings
 au FileType go nmap <leader>gr <Plug>(go-run)
 au FileType go nmap <leader>gbd <Plug>(go-build)
-au FileType go nmap <leader>gtst <Plug>(go-test)
+au FileType go nmap <leader>gtst :GoTest<CR>
+au FileType go nmap <leader>gtf :GoTestFunc<CR>
 au FileType go nmap <leader>gcov <Plug>(go-coverage)
 au FileType go nmap <Leader>gdoc <Plug>(go-doc)
 au FileType go nmap gds <Plug>(go-def-split)
@@ -280,12 +283,25 @@ vmap <Leader>cts :s#\%V\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>
 let g:ctrlp_custom_ignore = '\v(build|dist|tmp|bower_components|node_modules|cordova|build_cache|Godeps)$'
 
 " Setup Vim Test
-let test#strategy = "dispatch"
+let test#strategy = "asyncrun"
+let test#go#runner = 'ginkgo'
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
 nmap <silent> <leader>a :TestSuite<CR>
 nmap <silent> <leader>l :TestLast<CR>
 nmap <silent> <leader>g :TestVisit<CR>
+
+" Auto open QuickFix window when tests run
+function! CloseQuickFixOnSuccess()
+    if g:asyncrun_status =~ "success"
+        call asyncrun#quickfix_toggle(8, 0)
+    endif
+endfunction
+
+augroup vimrc
+    autocmd User AsyncRunStart call asyncrun#quickfix_toggle(8, 1)
+    autocmd User AsyncRunStop call CloseQuickFixOnSuccess()
+augroup END
 
 " Use Go Imports
 let g:go_fmt_command = "goimports"
@@ -318,8 +334,17 @@ endfunction
 au BufRead,BufNewFile * call CustomizeSyntax()
 
 " Rust Lang
-let g:rustfmt_autosave = 1 " Enable auto format on save
-let g:ycm_rust_src_path = '/usr/local/rust/rustc-1.9.0/src'
+function! SetRustOptions()
+  let g:rustfmt_autosave = 1 " Enable auto format on save
+  let g:ycm_rust_src_path = $RUST_SRC_PATH
+  let g:rust_fold=1
+  set textwidth=99
+  set colorcolumn=99
+  set tabstop=4
+  set softtabstop=4
+  set shiftwidth=4
+endfunction
+au FileType rust call SetRustOptions()
 
 if &term =~ 'tmux'
   " disable Background Color Erase (BCE) so that color schemes
