@@ -15,3 +15,6 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # added by travis gem
 [ -f /Users/kayle/.travis/travis.sh ] && source /Users/kayle/.travis/travis.sh
+
+### Added by the Bluemix CLI
+source /usr/local/Bluemix/bx/bash_autocomplete
