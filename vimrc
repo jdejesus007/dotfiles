@@ -99,6 +99,7 @@ if has('nvim')
     return ! col || getline('.')[col - 1] =~? '\s'
   endfunction "}}}
 endif
+call plug#end()
 
 filetype plugin indent on    " required
 
