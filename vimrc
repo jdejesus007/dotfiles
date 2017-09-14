@@ -100,13 +100,6 @@ if has('nvim')
   endfunction "}}}
 endif
 
-" " Snippets are separated from the engine. Add this if you want them:
-Plug 'honza/vim-snippets'
-""""""""""""""""""""""""""""""
-
-" Initialize plugin system
-call plug#end()
-
 filetype plugin indent on    " required
 
 " allow backspacing over everything in insert mode
@@ -386,9 +379,9 @@ endfunction
 au BufRead,BufNewFile * call CustomizeSyntax()
 
 " Rust Lang
-let g:rustfmt_autosave = 1 " Enable auto format on save
-let g:syntastic_rust_checkers = ['clippy']
 function! SetRustOptions()
+  let g:rustfmt_autosave = 1 " Enable auto format on save
+  let g:syntastic_rust_checkers = ['clippy']
   let g:ycm_rust_src_path = $RUST_SRC_PATH
   let g:rust_fold=1
   set textwidth=99
