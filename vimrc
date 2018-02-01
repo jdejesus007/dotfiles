@@ -1,4 +1,5 @@
 set nocompatible              " be iMproved, required
+set clipboard=unnamed
 filetype off                  " required
 
 " set the runtime path to include Vundle and initialize
@@ -7,13 +8,14 @@ call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
 
+"Match opening/closing brackets
+set showmatch
+
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
 
-Plugin 'FredKSchott/CoVim'
 Plugin 'Raimondi/delimitMate' "auto close quotes, paren, etc
 Plugin 'airblade/vim-gitgutter'
-Plugin 'blindFS/vim-taskwarrior'
 Plugin 'bling/vim-airline'
 Plugin 'evanmiller/nginx-vim-syntax'
 Plugin 'fatih/vim-go'
@@ -41,13 +43,14 @@ Plugin 'tpope/vim-dispatch'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-vinegar'
-Plugin 'valloric/YouCompleteMe'
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'vim-scripts/loremipsum'
 Plugin 'vim-scripts/SyntaxRange'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'wavded/vim-stylus.git'
-
+Plugin 'blindFS/vim-taskwarrior'
+Plugin 'Valloric/MatchTagAlways'
+Plugin 'Valloric/YouCompleteMe'
 
 """"""""" Snippets """""""""""
 " Track the engine.
@@ -294,9 +297,6 @@ let g:syntastic_go_checkers = ['gofmt', 'golint', 'govet', 'errcheck']
 "let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:go_list_type = "quickfix"
 
-" Collaborative Vim
-let CoVim_default_name = "kayle"
-let CoVim_default_port = "1337"
 
 " Project Specific VimRC
 set exrc
@@ -327,3 +327,6 @@ if &term =~ 'tmux'
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
+
+syntax enable
+colorscheme monokai
