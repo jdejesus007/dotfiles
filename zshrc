@@ -11,7 +11,7 @@ typeset -U PATH # remove duplicate entries
 
 
 # added by travis gem
-[ -f /Users/kayle/.travis/travis.sh ] && source /Users/kayle/.travis/travis.sh
+[ -f /Users/jdj/.travis/travis.sh ] && source /Users/kayle/.travis/travis.sh
 
 ### Added by the Bluemix CLI
 source /usr/local/Bluemix/bx/zsh_autocomplete
