@@ -45,7 +45,7 @@ Plug 'vim-scripts/loremipsum'
 Plug 'vim-scripts/SyntaxRange'
 Plug 'wakatime/vim-wakatime'
 Plug 'wavded/vim-stylus.git'
-Plug 'apple/swift', { 'rtp': 'utils/vim' }
+Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] } " markdown support
 Plug 'google/protobuf', { 'rtp': 'editors' }
 Plug 'wagnerf42/vim-clippy'
 Plug 'Valloric/MatchTagAlways'
