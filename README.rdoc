@@ -1,11 +1,11 @@
-= Kayle Gishen's Dot Files
+= Jon De Jesus's Dot Files
 
 These are config files to set up a system the way I like it.
 
 
 == Installation
 
-  git clone git://github.com/kayleg/dotfiles ~/.dotfiles
+  git clone git://github.com/jdejesus007/dotfiles ~/.dotfiles
   cd ~/.dotfiles
   rake install
 

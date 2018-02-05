@@ -1,9 +1,9 @@
-set  imap_user  =  kaylegishen@gmail.com
-set  imap_pass  =  `security find-generic-password -w -s mutt -a "kaylegishen@gmail.com"`
-set  smtp_url   =  "smtp://kaylegishen@gmail.com@smtp.gmail.com:587/"
-set  smtp_pass  =  `security find-generic-password -w -s mutt -a "kaylegishen@gmail.com"`
-set  from       =  kaylegishen@gmail.com
-set  realname   =  "Kayle Gishen"
+set  imap_user  =  jdejesu3@gmail.com
+set  imap_pass  =  `security find-generic-password -w -s mutt -a "jdejesu3@gmail.com"`
+set  smtp_url   =  "smtp://jdejesu3@gmail.com@smtp.gmail.com:587/"
+set  smtp_pass  =  `security find-generic-password -w -s mutt -a "jdejesu3@gmail.com"`
+set  from       =  jdejesu3@gmail.com
+set  realname   =  "Jon De Jesus"
 set  editor     =  'vim -c "set spell spelllang=en_us"'
 
 set timeout = 3
