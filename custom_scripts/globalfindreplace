@@ -1,0 +1,5 @@
+
+echo $1 $2 $3
+find $4 -name '*.$1' -print0 | xargs -0 sed -i '' -e s/$2/$3/g
+echo 'Done'
+

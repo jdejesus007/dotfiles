@@ -29,9 +29,7 @@ Plug 'rizzatti/dash.vim'
 Plug 'rking/ag.vim'
 Plug 'rust-lang/rust.vim'
 Plug 'samsonw/vim-task'
-Plug 'scrooloose/syntastic'
 Plug 'skywind3000/asyncrun.vim'
-Plug 'ternjs/tern_for_vim'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-bundler'
 Plug 'tpope/vim-commentary'
@@ -49,6 +47,7 @@ Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] } " markdown support
 Plug 'google/protobuf', { 'rtp': 'editors' }
 Plug 'wagnerf42/vim-clippy'
 Plug 'Valloric/MatchTagAlways'
+Plug 'w0rp/ale'
 
 
 if !has('nvim')
@@ -317,6 +316,15 @@ if filereadable(expand("~/.vimrc.local"))
 endif
 
 
+"Js standard
+let g:ale_linters = {
+\   'javascript': ['standard'],
+\   'go': ['gofmt', 'gometalinter'],
+\   'rust': ['cargo', 'rls'],
+\}
+"autocmd bufwritepost *.js silent !standard --fix %
+"set autoread
+"Js standard
 
 " Change CamelCase to snake_case
 nmap <Leader>cts :s#\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>
@@ -348,9 +356,6 @@ augroup END
 
 " Use Go Imports
 let g:go_fmt_command = "goimports"
-" Turn on error checking with Go/Syntastic
-let g:syntastic_go_checkers = ['gofmt', 'golint', 'govet', 'errcheck']
-"let g:syntastic_mode_map = { 'mode': 'active', 'passive_filetypes': ['go'] }
 let g:go_list_type = "quickfix"
 
 
@@ -382,14 +387,13 @@ au BufRead,BufNewFile * call CustomizeSyntax()
 " Rust Lang
 function! SetRustOptions()
   let g:rustfmt_autosave = 1 " Enable auto format on save
-  let g:syntastic_rust_checkers = ['clippy']
   let g:ycm_rust_src_path = $RUST_SRC_PATH
   let g:rust_fold=1
   set textwidth=99
   set colorcolumn=99
-  set tabstop=4
-  set softtabstop=4
-  set shiftwidth=4
+  set tabstop=2
+  set softtabstop=2
+  set shiftwidth=2
 endfunction
 au FileType rust call SetRustOptions()
 
