@@ -132,7 +132,9 @@ if (&t_Co > 2 || has("gui_running")) && !exists("syntax_on")
   set hlsearch
 endif
 
+" colorscheme monokai
 colorscheme railscasts
+syntax enable
 
 " Enable the following to keep terminal color
 "hi Normal guibg=NONE ctermbg=NONE
@@ -403,6 +405,3 @@ if &term =~ 'tmux'
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
-
-syntax enable
-colorscheme monokai
