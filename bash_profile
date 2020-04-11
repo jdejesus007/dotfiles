@@ -1,14 +1,12 @@
 export SITE_VERSION=$(date +%H)
-export GOPATH=~/code/go
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
 export PATH=$PATH:/usr/bin/local
-export PATH=$PATH:/opt/protobuf
-export PATH=$PATH:/opt/protobuf/bin
 export ASSET_URL_ROOT=/
 
 export PATH="$HOME/.cargo/bin:$PATH"
-
+export GOPATH=$HOME/code/go
+export GOBIN=$GOPATH/bin
+export PATH=$PATH:$GOPATH
+export PATH=$PATH:$GOBIN
 
 alias ll='ls -laG'
 alias c='clear'

@@ -5,11 +5,14 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 #FROM BASH_PROFILE
 export SITE_VERSION=$(date +%H)
-export GOPATH=~/code/go
+export GOPATH=$HOME/code/go
 export GOROOT=/usr/local/opt/go/libexec
+export GOBIN=$GOPATH/bin
 export PATH=/Users/jdj/gcloud_apps/protoc-3.7.0-rc-3-osx-x86_64:$PATH:$GOPATH/bin:$GOROOT/bin
 export PATH=$PATH:/Users/jdj/flutter/flutter/bin
 export PATH=$PATH:/Users/jdj/istio/latest/istio-1.1.0/bin
+export PATH=$PATH:$GOPATH
+export PATH=$PATH:$GOBIN
 export ASSET_URL_ROOT=/
 
 # Path to your oh-my-zsh installation.
