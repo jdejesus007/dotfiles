@@ -12,7 +12,7 @@ Plug 'Raimondi/delimitMate' "auto close quotes, paren, etc
 Plug 'airblade/vim-gitgutter'
 " Plug 'blindFS/vim-taskwarrior'
 Plug 'bling/vim-airline'
-Plug 'evanmiller/nginx-vim-syntax'
+Plug 'chr4/nginx.vim'
 Plug 'fatih/vim-go'
 Plug 'flazz/vim-colorschemes'
 Plug 'godlygeek/tabular'
@@ -48,7 +48,7 @@ Plug 'google/protobuf', { 'rtp': 'editors' }
 Plug 'wagnerf42/vim-clippy'
 Plug 'Valloric/MatchTagAlways'
 Plug 'w0rp/ale'
-
+Plug 'apple/swift'
 
 if !has('nvim')
   Plug 'valloric/YouCompleteMe'
