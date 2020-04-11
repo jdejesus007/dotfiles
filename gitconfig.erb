@@ -15,7 +15,14 @@
   pager = less -r
 [apply]
 	whitespace = nowarn
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [format]
 	pretty = %C(yellow)%h%Creset %s %C(red)(%an, %cr)%Creset
 [github]
-	user = <%= print("GitHub Username: "); STDOUT.flush; STDIN.gets.chomp %>
+  user = <%= print("GitHub Username: "); STDOUT.flush; STDIN.gets.chomp %>
+[url "ssh://git@github.com/deliverydudes/"]
+  insteadOf = https://github.com/deliverydudes/
