@@ -10,7 +10,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'FredKSchott/CoVim'
 Plug 'Raimondi/delimitMate' "auto close quotes, paren, etc
 Plug 'airblade/vim-gitgutter'
-Plug 'blindFS/vim-taskwarrior'
+" Plug 'blindFS/vim-taskwarrior'
 Plug 'bling/vim-airline'
 Plug 'evanmiller/nginx-vim-syntax'
 Plug 'fatih/vim-go'
@@ -41,8 +41,8 @@ Plug 'trayo/vim-gomega-snippets'
 Plug 'vim-scripts/dbext.vim'
 Plug 'vim-scripts/loremipsum'
 Plug 'vim-scripts/SyntaxRange'
-Plug 'wakatime/vim-wakatime'
-Plug 'wavded/vim-stylus.git'
+" Plug 'wakatime/vim-wakatime'
+Plug 'wavded/vim-stylus'
 Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] } " markdown support
 Plug 'google/protobuf', { 'rtp': 'editors' }
 Plug 'wagnerf42/vim-clippy'
