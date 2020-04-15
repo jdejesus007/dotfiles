@@ -116,13 +116,16 @@ eval $(thefuck --alias)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/jdj/gcloud_apps/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jdj/gcloud_apps/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/jdj/gcloud_apps/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jdj/gcloud_apps/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/usr/local/opt/mariadb@10.3/bin:$PATH"
 
 # Add python 3.7 for eb usage
 export PATH="/Users/jdj/Library/Python/3.7/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jdj/apps/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jdj/apps/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jdj/apps/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jdj/apps/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+export PATH="/usr/local/opt/helm@2/bin:$PATH"

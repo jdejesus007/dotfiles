@@ -1,8 +1,6 @@
 export SITE_VERSION=$(date +%H)
 export PATH=$PATH:/usr/bin/local
 export ASSET_URL_ROOT=/
-
-export PATH="$HOME/.cargo/bin:$PATH"
 export GOPATH=$HOME/code/go
 export GOBIN=$GOPATH/bin
 export PATH=$PATH:$GOPATH
@@ -27,3 +25,5 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
 
+
+export PATH="$HOME/.cargo/bin:$PATH"

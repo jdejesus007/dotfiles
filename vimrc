@@ -7,7 +7,7 @@ filetype off                  " required
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-Plug 'FredKSchott/CoVim'
+" Plug 'FredKSchott/CoVim'
 Plug 'Raimondi/delimitMate' "auto close quotes, paren, etc
 Plug 'airblade/vim-gitgutter'
 " Plug 'blindFS/vim-taskwarrior'
