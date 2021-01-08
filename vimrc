@@ -2,6 +2,8 @@ set nocompatible              " be iMproved, required
 set clipboard=unnamed
 filetype off                  " required
 
+" VimPlug  is the plugin manager
+
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -47,8 +49,12 @@ Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] } " markdown support
 Plug 'google/protobuf', { 'rtp': 'editors' }
 Plug 'wagnerf42/vim-clippy'
 Plug 'Valloric/MatchTagAlways'
-Plug 'w0rp/ale'
 Plug 'apple/swift'
+" Use release branch (recommend)
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+" Plug 'dense-analysis/ale'
 
 if !has('nvim')
   Plug 'valloric/YouCompleteMe'
@@ -66,33 +72,31 @@ endif
 if has('nvim')
   Plug 'Shougo/neosnippet'
   Plug 'Shougo/neosnippet-snippets'
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-  Plug 'zchee/deoplete-go', { 'do': 'make'}
-  Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
+  " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  " Plug 'zchee/deoplete-go', { 'do': 'make'}
+  " Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 
-  let g:deoplete#enable_at_startup = 1
-  let g:deoplete#disable_auto_complete = 1
-  autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-  " <CR>: If popup menu visible, expand snippet or close popup with selection,
-  "       Otherwise, check if within empty pair and use delimitMate.
-  inoremap <silent><expr><CR> pumvisible() ?
-    \ (neosnippet#expandable() ? neosnippet#mappings#expand_impl() : deoplete#close_popup())
-      \ : (delimitMate#WithinEmptyPair() ? "\<C-R>=delimitMate#ExpandReturn()\<CR>" : "\<CR>")
+  " autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+  " " <CR>: If popup menu visible, expand snippet or close popup with selection,
+  " "       Otherwise, check if within empty pair and use delimitMate.
+  " inoremap <silent><expr><CR> pumvisible() ?
+  "   \ (neosnippet#expandable() ? neosnippet#mappings#expand_impl() : deoplete#close_popup())
+  "     \ : (delimitMate#WithinEmptyPair() ? "\<C-R>=delimitMate#ExpandReturn()\<CR>" : "\<CR>")
 
   " <Tab> completion:
   " 1. If popup menu is visible, select and insert next item
   " 2. Otherwise, if within a snippet, jump to next input
   " 3. Otherwise, if preceding chars are whitespace, insert tab char
   " 4. Otherwise, start manual autocomplete
-  imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-    \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
-    \ : (<SID>is_whitespace() ? "\<Tab>"
-    \ : deoplete#manual_complete()))
+  " imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
+  "   \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
+  "   \ : (<SID>is_whitespace() ? "\<Tab>"
+  "   \ : deoplete#manual_complete()))
 
-  smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-    \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
-    \ : (<SID>is_whitespace() ? "\<Tab>"
-    \ : deoplete#manual_complete()))
+  " smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
+  "   \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
+  "   \ : (<SID>is_whitespace() ? "\<Tab>"
+  "   \ : deoplete#manual_complete()))
 
   inoremap <expr><S-Tab>  pumvisible() ? "\<Up>" : "\<C-h>"
 
@@ -101,6 +105,17 @@ if has('nvim')
     return ! col || getline('.')[col - 1] =~? '\s'
   endfunction "}}}
 endif
+
+" LanguageClient for neovim - gives linter, renamer, and go to definition
+" support from Microsoft
+" Plug 'autozimu/LanguageClient-neovim', {
+"     \ 'branch': 'next',
+"     \ 'do': 'bash install.sh',
+"     \ }
+
+" (Optional) Multi-entry selection UI.
+Plug 'junegunn/fzf'
+
 call plug#end()
 
 filetype plugin indent on    " required
@@ -118,6 +133,9 @@ set incsearch  " do incremental searching
 " disable completopt preview
 set completeopt=menuone
 
+" Use deoplete
+" JS linter / syntax config.
+" let g:deoplete#enable_at_startup = 1
 " Limit autocomplete to 10
 set pumheight=10
 
@@ -290,12 +308,15 @@ imap <Leader>w <Esc><Leader>w
 " will restore visual select
 vmap <Leader>w <Esc><Leader>wgv
 
-" Beautification
+" Beautification / prettier plugin
+let g:prettier#autoformat = 1
+let g:prettier#autoformat_require_pragma = 0
 
 nmap <Leader>a= :Tabularize decl_assign<CR>
 vmap <Leader>a= :Tabularize decl_assign<CR>
 nmap <Leader>a: :Tabularize /:/l2r2<CR>
 vmap <Leader>a: :Tabularize /:/l2r2<CR>
+
 
 if !has("nvim")
   " Configure Ultisnips + YCM to play nice
@@ -317,16 +338,19 @@ if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
 
-
-"Js standard
-let g:ale_linters = {
-\   'javascript': ['standard'],
-\   'go': ['gofmt', 'gometalinter'],
-\   'rust': ['cargo', 'rls'],
-\}
-"autocmd bufwritepost *.js silent !standard --fix %
-"set autoread
-"Js standard
+" Ale
+" let g:ale_fixers = {
+" \   'javascript': ['prettier'],
+" \   'css': ['prettier'],
+" \}
+" let g:ale_fix_on_save = 1
+" let g:ale_linters = {
+" \   'javascript': ['prettier'],
+" \   'go': ['gofmt', 'gometalinter'],
+" \   'rust': ['cargo', 'rls'],
+" \}
+" set autoread
+" Ale
 
 " Change CamelCase to snake_case
 nmap <Leader>cts :s#\(\<\u\l\+\\|\l\+\)\(\u\)#\l\1_\l\2#g<CR>
@@ -405,3 +429,191 @@ if &term =~ 'tmux'
   " see also http://snk.tuxfamily.org/log/vim-256color-bce.html
   set t_ut=
 endif
+
+" LanguageClient
+" Required for operations modifying multiple buffers like rename.
+" set hidden
+
+" let g:LanguageClient_serverCommands = {
+"     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+"     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+"     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+"     \ 'python': ['/usr/local/bin/pyls'],
+"     \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+"     \ }
+
+" nnoremap <F5> :call LanguageClient#contextMenu()<CR>
+" " Or map each action separately
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" " nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <buffer> <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+
+" " Required for operations modifying multiple buffers like rename.
+" set hidden
+
+" let g:LanguageClient_serverCommands = {
+"     \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+"     \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+"     \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+"     \ 'python': ['/usr/local/bin/pyls'],
+"     \ 'ruby': ['~/.rbenv/shims/solargraph', 'stdio'],
+"     \ }
+
+" nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" " Or map each action separately
+" nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+" nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+" nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+
+" " CocVim intellisense with language server protocol
+" " TextEdit might fail if hidden is not set.
+" set hidden
+
+" " Some servers have issues with backup files, see #649.
+" set nobackup
+" set nowritebackup
+
+" " Give more space for displaying messages.
+" set cmdheight=2
+
+" " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" " delays and poor user experience.
+" set updatetime=300
+
+" " Don't pass messages to |ins-completion-menu|.
+" set shortmess+=c
+
+" " Always show the signcolumn, otherwise it would shift the text each time
+" " diagnostics appear/become resolved.
+" if has("patch-8.1.1564")
+"   " Recently vim can merge signcolumn and number column into one
+"   set signcolumn=number
+" else
+"   set signcolumn=yes
+" endif
+
+" " Use tab for trigger completion with characters ahead and navigate.
+" " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" " other plugin before putting this into your config.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+
+" " Use <c-space> to trigger completion.
+" inoremap <silent><expr> <c-space> coc#refresh()
+
+" " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" " position. Coc only does snippet and additional edit on confirm.
+" " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+" if exists('*complete_info')
+"   inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+" else
+"   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" endif
+
+" " Use `[g` and `]g` to navigate diagnostics
+" nmap <silent> [g <Plug>(coc-diagnostic-prev)
+" nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" " GoTo code navigation.
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+
+" " Use K to show documentation in preview window.
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
+
+" " Highlight the symbol and its references when holding the cursor.
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" " Symbol renaming.
+" nmap <leader>rn <Plug>(coc-rename)
+
+" " Formatting selected code.
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
+
+" augroup mygroup
+"   autocmd!
+"   " Setup formatexpr specified filetype(s).
+"   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+"   " Update signature help on jump placeholder.
+"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" augroup end
+
+" " Applying codeAction to the selected region.
+" " Example: `<leader>aap` for current paragraph
+" xmap <leader>a  <Plug>(coc-codeaction-selected)
+" nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" " Remap keys for applying codeAction to the current buffer.
+" nmap <leader>ac  <Plug>(coc-codeaction)
+" " Apply AutoFix to problem on the current line.
+" nmap <leader>qf  <Plug>(coc-fix-current)
+
+" " Map function and class text objects
+" " NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+" xmap if <Plug>(coc-funcobj-i)
+" omap if <Plug>(coc-funcobj-i)
+" xmap af <Plug>(coc-funcobj-a)
+" omap af <Plug>(coc-funcobj-a)
+" xmap ic <Plug>(coc-classobj-i)
+" omap ic <Plug>(coc-classobj-i)
+" xmap ac <Plug>(coc-classobj-a)
+" omap ac <Plug>(coc-classobj-a)
+
+" " Use CTRL-S for selections ranges.
+" " Requires 'textDocument/selectionRange' support of LS, ex: coc-tsserver
+" nmap <silent> <C-s> <Plug>(coc-range-select)
+" xmap <silent> <C-s> <Plug>(coc-range-select)
+
+" " Add `:Format` command to format current buffer.
+" command! -nargs=0 Format :call CocAction('format')
+
+" " Add `:Fold` command to fold current buffer.
+" command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" " Add `:OR` command for organize imports of the current buffer.
+" command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" " Add (Neo)Vim's native statusline support.
+" " NOTE: Please see `:h coc-status` for integrations with external plugins that
+" " provide custom statusline: lightline.vim, vim-airline.
+" set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" " Mappings using CoCList:
+" " Show all diagnostics.
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions.
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands.
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document.
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols.
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list.
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" " CocVim intellisense with language server protocol

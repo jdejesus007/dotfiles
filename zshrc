@@ -5,15 +5,25 @@ export PATH="$HOME/.cargo/bin:$PATH"
 
 #FROM BASH_PROFILE
 export SITE_VERSION=$(date +%H)
-export GOPATH=$HOME/code/go
+export GOPATH=/Users/jdj/code/go
 export GOROOT=/usr/local/opt/go/libexec
-export GOBIN=$GOPATH/bin
+export GOBIN=/Users/jdj/code/go/bin
 export PATH=/Users/jdj/gcloud_apps/protoc-3.7.0-rc-3-osx-x86_64:$PATH:$GOPATH/bin:$GOROOT/bin
-export PATH=$PATH:/Users/jdj/flutter/flutter/bin
+export PATH=$PATH:/Users/jdj/.asdf/installs/flutter/v1.12.13+hotfix.9/bin
 export PATH=$PATH:/Users/jdj/istio/latest/istio-1.1.0/bin
 export PATH=$PATH:$GOPATH
 export PATH=$PATH:$GOBIN
 export ASSET_URL_ROOT=/
+export INTEL_HAXM_HOME=/usr/local/Caskroom/intel-haxm
+export JAVA_HOME=$(/usr/libexec/java_home -v"14");
+export ANDROID_HOME=/Users/jdj/Library/Android/sdk/
+export ANDROID_NDK_ROOT=/Users/jdj/Library/Android/sdk/ndk
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH=$PATH:~/apps/ngrok
+
+# Kubernetes
+alias kd='kubectl -n development'
+alias kp='kubectl -n production'
 
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/jdj/.oh-my-zsh
@@ -118,9 +128,9 @@ eval $(thefuck --alias)
 export PATH="/usr/local/opt/sqlite/bin:$PATH"
 export PATH="/usr/local/opt/mariadb@10.3/bin:$PATH"
 
-# Add python 3.7 for eb usage
-export PATH="/Users/jdj/Library/Python/3.7/bin:$PATH"
-export PATH="/usr/local/sbin:$PATH"
+# Add python 3.8 for eb usage
+# export PATH="/Users/jdj/Library/Python/3.8/bin:$PATH"
+# export PATH="/usr/local/sbin:$PATH"
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/jdj/apps/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jdj/apps/google-cloud-sdk/path.zsh.inc'; fi
@@ -129,3 +139,10 @@ if [ -f '/Users/jdj/apps/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jdj/ap
 if [ -f '/Users/jdj/apps/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jdj/apps/google-cloud-sdk/completion.zsh.inc'; fi
 export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="/usr/local/opt/helm@2/bin:$PATH"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
+
+# eval "$(starship init zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
